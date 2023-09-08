@@ -1,0 +1,62 @@
+﻿@page "/owners"
+@using Veterinary.Shared.Entities;
+@using Veterinary.WEB.Repositories;
+
+@inject IRepository repository
+
+<h3>OwnersIndex</h3>
+
+<div   class="mb-3">
+
+<a class="btn btn-primary" href="/owners/create"> New Owner</a>
+</div>
+
+<GenericList MyList="Owners">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Owner</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var owner in Owners!)
+                {
+                    <tr>
+                        <td>
+                            @owner.FirstName
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
+
+
+
+
+
+@code {
+
+    public List<Owner>? Owners { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        var responseHttp = await repository.Get<List<Owner>>("/api/owners");
+        Owners = responseHttp.Response!;
+    }
+
+
+}
