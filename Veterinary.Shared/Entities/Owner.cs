@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Veterinary.Shared.Entities
@@ -35,6 +37,8 @@ namespace Veterinary.Shared.Entities
         public string CellPhone { get; set; }
 
         [MaxLength(100, ErrorMessage = "The {0} field can not have more than {1} characters.")]
+
+       
         public string? Address { get; set; }   
 
         public string FullName => $"{FirstName} {LastName}";

@@ -49,7 +49,7 @@ namespace Veterinary.API.Controllers
 
         }
 
-
+        // Crear un nuevo registro
         [HttpPost]
         public async Task<ActionResult> Post(Owner Owner)
         {
@@ -57,6 +57,41 @@ namespace Veterinary.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(Owner);
         }
+
+        // Actualizar o cambiar registro
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Owner Owner)
+        {
+            _context.Update(Owner);
+            await _context.SaveChangesAsync();
+            return Ok(Owner);
+        }
+
+
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+
+          
+            var FilaAfectada = await _context.Owners
+                .Where(x => x.Id == id)//5
+                .ExecuteDeleteAsync();  
+
+            if (FilaAfectada == 0)
+            {
+
+
+                return NotFound();//404
+            }
+
+            return NoContent();//204
+
+
+        }
+
+
     }
 }
 
