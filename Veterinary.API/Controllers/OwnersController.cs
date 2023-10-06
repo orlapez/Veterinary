@@ -68,7 +68,7 @@ namespace Veterinary.API.Controllers
             return Ok(Owner);
         }
 
-
+        // ELiminar registros
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
