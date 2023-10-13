@@ -10,6 +10,6 @@ namespace Veterinary.Shared.DTOs
     {
 
         public string Token { get; set; }
-        public DateTime expiration { get; set; }    
+        public DateTime Expiration { get; set; }    
     }
 }
