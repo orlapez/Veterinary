@@ -44,5 +44,7 @@ namespace Veterinary.Shared.Entities
         public string FullName => $"{FirstName} {LastName}";
 
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
+
+
     }
 }
