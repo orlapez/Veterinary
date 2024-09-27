@@ -11,6 +11,8 @@ namespace Veterinary.Shared.Entities
     {
         public int Id { get; set; }
 
+        [MaxLength(10, ErrorMessage = "EL nombre debe ser menor a 10 caracteres")]
+
         [Display(Name="Documento de identidad")]
         [Required]
         public string Document { get; set; }
@@ -35,7 +37,11 @@ namespace Veterinary.Shared.Entities
         [Required]
         public string  Address { get; set; }
 
-        public string FullName=>$"{FirstName}  {LastName}";   
+        public string FullName=>$"{FirstName}  {LastName}";
+
+        public ICollection<Agenda> Agendas { get; set; }
+
+
 
 
 
