@@ -12,8 +12,8 @@ using Veterinary.API.Data;
 namespace Veterinary.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241001013449_AllRelationsShips2")]
-    partial class AllRelationsShips2
+    [Migration("20241002022219_New")]
+    partial class New
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

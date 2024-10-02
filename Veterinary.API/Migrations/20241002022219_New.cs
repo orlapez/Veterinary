@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Veterinary.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AllRelationsShips2 : Migration
+    public partial class New : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

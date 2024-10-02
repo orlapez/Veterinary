@@ -1,0 +1,73 @@
+﻿@page "/owners"
+@using Veterinary.Shared.Entities
+@using Veterinary.WEB.Repositories
+
+@inject IRepository repository
+<h3>Owners</h3>
+
+<div class="mb-3">
+
+    <a class="btn btn-primary" href="/owners/Create">New Owner</a>
+
+</div>
+
+<GenericList MyList="owners">
+
+
+    <body>
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th>Owner</th>
+
+
+        </tr>
+
+
+
+
+    </thead>
+    <tbody>
+               
+
+
+    </tbody>
+     
+
+
+
+
+
+
+
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+
+
+
+
+
+
+
+
+</GenericList>
+
+
+
+
+
+@code {
+
+}
