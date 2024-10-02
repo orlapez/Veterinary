@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Veterinary.Shared.Entities
@@ -35,11 +36,18 @@ namespace Veterinary.Shared.Entities
         [MaxLength(100, ErrorMessage = "EL nombre debe ser menor a 100 caracteres")]
         public string Remarks { get; set; }
 
+        [JsonIgnore]
         public ICollection<History> Histories { get; set; }
 
-        public Owner Owner { get; set; }
+        [JsonIgnore]
+        public Owner Owners { get; set; }
+       public int OwnerId { get; set; }
 
-        public PetType PetType { get; set; }
+        [JsonIgnore]
+         public PetType PetTypes { get; set; }
+        public int PetTypeId { get; set; }
+
+        [JsonIgnore]
 
         public ICollection<Agenda> Agendas { get; set; }
 

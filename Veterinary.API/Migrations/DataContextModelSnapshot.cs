@@ -36,10 +36,10 @@ namespace Veterinary.API.Migrations
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("OwnerId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PetId")
+                    b.Property<int>("PetId")
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
@@ -51,7 +51,7 @@ namespace Veterinary.API.Migrations
 
                     b.HasIndex("PetId");
 
-                    b.ToTable("Agenda");
+                    b.ToTable("Agendas");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.History", b =>
@@ -67,14 +67,14 @@ namespace Veterinary.API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("PetId")
+                    b.Property<int>("PetId")
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("ServiceTypeId")
+                    b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -83,7 +83,7 @@ namespace Veterinary.API.Migrations
 
                     b.HasIndex("ServiceTypeId");
 
-                    b.ToTable("History");
+                    b.ToTable("Histories");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.Owner", b =>
@@ -142,10 +142,10 @@ namespace Veterinary.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("OwnerId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PetTypeId")
+                    b.Property<int>("PetTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Race")
@@ -163,7 +163,7 @@ namespace Veterinary.API.Migrations
 
                     b.HasIndex("PetTypeId");
 
-                    b.ToTable("Pet");
+                    b.ToTable("Pets");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.PetType", b =>
@@ -181,7 +181,7 @@ namespace Veterinary.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PetType");
+                    b.ToTable("PetTypes");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.ServiceType", b =>
@@ -199,18 +199,22 @@ namespace Veterinary.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceType");
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.Agenda", b =>
                 {
                     b.HasOne("Veterinary.Shared.Entities.Owner", "Owner")
                         .WithMany("Agendas")
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Veterinary.Shared.Entities.Pet", "Pet")
                         .WithMany("Agendas")
-                        .HasForeignKey("PetId");
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Owner");
 
@@ -219,32 +223,40 @@ namespace Veterinary.API.Migrations
 
             modelBuilder.Entity("Veterinary.Shared.Entities.History", b =>
                 {
-                    b.HasOne("Veterinary.Shared.Entities.Pet", "Pet")
+                    b.HasOne("Veterinary.Shared.Entities.Pet", "Pets")
                         .WithMany("Histories")
-                        .HasForeignKey("PetId");
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Veterinary.Shared.Entities.ServiceType", "ServiceType")
+                    b.HasOne("Veterinary.Shared.Entities.ServiceType", "ServiceTypes")
                         .WithMany("Histories")
-                        .HasForeignKey("ServiceTypeId");
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Pet");
+                    b.Navigation("Pets");
 
-                    b.Navigation("ServiceType");
+                    b.Navigation("ServiceTypes");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.Pet", b =>
                 {
-                    b.HasOne("Veterinary.Shared.Entities.Owner", "Owner")
+                    b.HasOne("Veterinary.Shared.Entities.Owner", "Owners")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Veterinary.Shared.Entities.PetType", "PetType")
+                    b.HasOne("Veterinary.Shared.Entities.PetType", "PetTypes")
                         .WithMany()
-                        .HasForeignKey("PetTypeId");
+                        .HasForeignKey("PetTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("Owners");
 
-                    b.Navigation("PetType");
+                    b.Navigation("PetTypes");
                 });
 
             modelBuilder.Entity("Veterinary.Shared.Entities.Owner", b =>

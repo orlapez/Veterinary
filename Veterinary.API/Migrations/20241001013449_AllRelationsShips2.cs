@@ -6,22 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Veterinary.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AllEntitiesRelationShips : Migration
+    public partial class AllRelationsShips2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Document",
-                table: "Owners",
-                type: "nvarchar(10)",
-                maxLength: 10,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+            migrationBuilder.CreateTable(
+                name: "Owners",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Document = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FixedPhone = table.Column<int>(type: "int", nullable: false),
+                    CellPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Owners", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                name: "PetType",
+                name: "PetTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -30,11 +39,11 @@ namespace Veterinary.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PetType", x => x.Id);
+                    table.PrimaryKey("PK_PetTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceType",
+                name: "ServiceTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,11 +52,11 @@ namespace Veterinary.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceType", x => x.Id);
+                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pet",
+                name: "Pets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -57,26 +66,28 @@ namespace Veterinary.API.Migrations
                     Race = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Born = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Remarks = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    OwnerId = table.Column<int>(type: "int", nullable: true),
-                    PetTypeId = table.Column<int>(type: "int", nullable: true)
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    PetTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pet", x => x.Id);
+                    table.PrimaryKey("PK_Pets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pet_Owners_OwnerId",
+                        name: "FK_Pets_Owners_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owners",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pet_PetType_PetTypeId",
+                        name: "FK_Pets_PetTypes_PetTypeId",
                         column: x => x.PetTypeId,
-                        principalTable: "PetType",
-                        principalColumn: "Id");
+                        principalTable: "PetTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Agenda",
+                name: "Agendas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -84,78 +95,82 @@ namespace Veterinary.API.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
-                    PetId = table.Column<int>(type: "int", nullable: true),
-                    OwnerId = table.Column<int>(type: "int", nullable: true)
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Agenda", x => x.Id);
+                    table.PrimaryKey("PK_Agendas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Agenda_Owners_OwnerId",
+                        name: "FK_Agendas_Owners_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owners",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Agenda_Pet_PetId",
+                        name: "FK_Agendas_Pets_PetId",
                         column: x => x.PetId,
-                        principalTable: "Pet",
-                        principalColumn: "Id");
+                        principalTable: "Pets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
-                name: "History",
+                name: "Histories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Remarks = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    ServiceTypeId = table.Column<int>(type: "int", nullable: true),
-                    PetId = table.Column<int>(type: "int", nullable: true)
+                    ServiceTypeId = table.Column<int>(type: "int", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_History", x => x.Id);
+                    table.PrimaryKey("PK_Histories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_History_Pet_PetId",
+                        name: "FK_Histories_Pets_PetId",
                         column: x => x.PetId,
-                        principalTable: "Pet",
-                        principalColumn: "Id");
+                        principalTable: "Pets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_History_ServiceType_ServiceTypeId",
+                        name: "FK_Histories_ServiceTypes_ServiceTypeId",
                         column: x => x.ServiceTypeId,
-                        principalTable: "ServiceType",
-                        principalColumn: "Id");
+                        principalTable: "ServiceTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agenda_OwnerId",
-                table: "Agenda",
+                name: "IX_Agendas_OwnerId",
+                table: "Agendas",
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agenda_PetId",
-                table: "Agenda",
+                name: "IX_Agendas_PetId",
+                table: "Agendas",
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_History_PetId",
-                table: "History",
+                name: "IX_Histories_PetId",
+                table: "Histories",
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_History_ServiceTypeId",
-                table: "History",
+                name: "IX_Histories_ServiceTypeId",
+                table: "Histories",
                 column: "ServiceTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pet_OwnerId",
-                table: "Pet",
+                name: "IX_Pets_OwnerId",
+                table: "Pets",
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pet_PetTypeId",
-                table: "Pet",
+                name: "IX_Pets_PetTypeId",
+                table: "Pets",
                 column: "PetTypeId");
         }
 
@@ -163,28 +178,22 @@ namespace Veterinary.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Agenda");
+                name: "Agendas");
 
             migrationBuilder.DropTable(
-                name: "History");
+                name: "Histories");
 
             migrationBuilder.DropTable(
-                name: "Pet");
+                name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "ServiceType");
+                name: "ServiceTypes");
 
             migrationBuilder.DropTable(
-                name: "PetType");
+                name: "Owners");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Document",
-                table: "Owners",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(10)",
-                oldMaxLength: 10);
+            migrationBuilder.DropTable(
+                name: "PetTypes");
         }
     }
 }

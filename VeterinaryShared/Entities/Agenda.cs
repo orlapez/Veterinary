@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Veterinary.Shared.Entities
@@ -24,10 +25,14 @@ namespace Veterinary.Shared.Entities
         [Display(Name = "¿Está disponible?")]
         public bool IsAvailable{ get; set; }
 
+        [JsonIgnore]
         public Pet Pet { get; set; }
+        public int PetId { get; set; }
+
+        [JsonIgnore]
         public Owner Owner { get; set; }
 
-
+        public int OwnerId { get; set; }
 
     }
 }

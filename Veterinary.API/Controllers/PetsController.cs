@@ -8,14 +8,13 @@ namespace Veterinary.API.Controllers
 
 
     [ApiController]
-    [Route("/api/owners")]
-    public class OwnerController : ControllerBase
+    [Route("/api/pets")]
+
+    public class PetsController:ControllerBase
     {
 
         private readonly DataContext _context;
-
-        public OwnerController(DataContext context)
-
+        public PetsController(DataContext context)
         {
 
             _context = context;
@@ -23,89 +22,122 @@ namespace Veterinary.API.Controllers
         }
 
 
-        //get de lista - Select * from owners
+        //Get por Lista--- Select * From Owners
         [HttpGet]
         public async Task<ActionResult> Get()
         {
 
-            return Ok(await _context.Owners.ToListAsync());
+            return Ok(await _context.Pets.ToListAsync());
+
 
         }
 
 
-        //Get con parámetro {id}
+        //Get por parámetro--- Select * from Owner Where id=2
         [HttpGet("{id:int}")]
-
         public async Task<ActionResult> Get(int id)
         {
 
-            var busqueda = await _context.Owners.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (busqueda == null)
+            var pet= await _context.Pets.FirstOrDefaultAsync(x => x.Id == id);
+            if (pet== null)
             {
 
                 return NotFound();
 
-
-
             }
             else
             {
+                return Ok(pet);
 
-                return Ok(busqueda);
+
+
             }
 
         }
-        //Crear un nuevo Owner
+
+
+
+
+        // Post- insertar un nuevo Owner
 
         [HttpPost]
-        public async Task<ActionResult> Post(Owner owner)
+
+        public async Task<ActionResult> Post(Pet pet)
         {
-            _context.Owners.Add(owner);
+
+            _context.Add(pet);
             await _context.SaveChangesAsync();
-            return Ok(owner);
+
+            return Ok(pet);
+
+
 
         }
 
 
-        //Actualizar un Owner
+
+        // Put- modificar un Owner
         [HttpPut]
-        public async Task<ActionResult> Put(Owner owner)
+
+        public async Task<ActionResult> Put(Pet pet)
         {
-            _context.Owners.Update(owner);
+
+            _context.Update(pet);
             await _context.SaveChangesAsync();
-            return Ok(owner);
+
+            return Ok(pet);
+
+
 
         }
 
 
-        // Eliminar un
-        [HttpDelete("{id:int}")]
 
+        // Delete-- Borrar un registro
+
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
 
-            var filasafectadas = await _context.Owners
-                .Where(x => x.Id == id)
+
+            var FilasAfectadas = await _context.Pets
+                .Where(a => a.Id == id)
                 .ExecuteDeleteAsync();
 
-            if (filasafectadas == 0)
+
+
+
+
+
+            if (FilasAfectadas == 0)
             {
 
-
-
                 return NotFound();
+
             }
             else
             {
-
                 return NoContent();
+
+
+
             }
-
-
-
         }
 
-    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
 }
