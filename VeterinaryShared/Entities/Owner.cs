@@ -28,7 +28,7 @@ namespace Veterinary.Shared.Entities
 
         [Display(Name = "Teléfono fijo")]
         [Required]
-        public int FixedPhone { get; set; }
+        public string FixedPhone { get; set; }
 
         [Display(Name = "Móvil")]
         [Required]

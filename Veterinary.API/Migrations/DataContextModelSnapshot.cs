@@ -111,8 +111,9 @@ namespace Veterinary.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FixedPhone")
-                        .HasColumnType("int");
+                    b.Property<string>("FixedPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

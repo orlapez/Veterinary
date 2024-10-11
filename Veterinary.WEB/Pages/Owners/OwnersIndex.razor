@@ -1,66 +1,79 @@
 ﻿@page "/owners"
 @using Veterinary.Shared.Entities
 @using Veterinary.WEB.Repositories
+@using Veterinary.WEB.Shared
 
 @inject IRepository repository
-<h3>Owners</h3>
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
+
+
+
+<h1>OwnersIndex</h1>
 
 <div class="mb-3">
 
-    <a class="btn btn-primary" href="/owners/Create">New Owner</a>
+
+    <a class="btn btn-primary " href="/owners/Create">New Owner</a>
 
 </div>
 
-<GenericList MyList="owners">
+<GenericList MyList="Owners">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Owner</th>
 
 
-    <body>
-<table class="table table-striped">
-    <thead>
-        <tr>
-        <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var owner in Owners!)
+                {
+                    <tr>
+
+                        <td>
+                            @owner.Document
+                        </td>
+                        <td>
+                            @owner.FirstName
+                        </td>
 
 
-        </tr>
+                        <td>
+                            @owner.LastName
+                        </td>
 
 
+                        <td>
+                            @owner.FixedPhone
+                        </td>
 
+                        <td>
+                            @owner.CellPhone
+                        </td>
 
-    </thead>
-    <tbody>
-               
-
-
-    </tbody>
-     
-
-
-
-
-
-
-
-
-</table>
-
-
-
-
-
-
-
-
-
-
-
-    </body>
+                        <td>
+                            @owner.Address
+                        </td>
 
 
 
+                        <td>
+                            <a href="/Owners/edit/@owner.Id" class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(owner))>Borrar</button>
+
+                        </td>
 
 
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-
+    </Body>
 
 </GenericList>
 
@@ -70,4 +83,54 @@
 
 @code {
 
+
+    public List<Owner> Owners { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        var responseHppt = await repository.GetAsync<List<Owner>>("/api/Owners");
+        Owners = responseHppt.Response!;
+    }
+
+    private async Task DeleteAsync(Owner Owner)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.DeleteAsync($"api/Owners/{Owner.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
+    }
 }

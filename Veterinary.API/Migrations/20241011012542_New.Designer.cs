@@ -12,7 +12,7 @@ using Veterinary.API.Data;
 namespace Veterinary.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241002022219_New")]
+    [Migration("20241011012542_New")]
     partial class New
     {
         /// <inheritdoc />
@@ -114,8 +114,9 @@ namespace Veterinary.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FixedPhone")
-                        .HasColumnType("int");
+                    b.Property<string>("FixedPhone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -20,7 +20,7 @@ namespace Veterinary.API.Migrations
                     Document = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FixedPhone = table.Column<int>(type: "int", nullable: false),
+                    FixedPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CellPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -106,7 +106,7 @@ namespace Veterinary.API.Migrations
                         column: x => x.OwnerId,
                         principalTable: "Owners",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Agendas_Pets_PetId",
                         column: x => x.PetId,
@@ -134,13 +134,13 @@ namespace Veterinary.API.Migrations
                         column: x => x.PetId,
                         principalTable: "Pets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Histories_ServiceTypes_ServiceTypeId",
                         column: x => x.ServiceTypeId,
                         principalTable: "ServiceTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
