@@ -55,11 +55,10 @@ namespace Veterinary.API.Data
                     Document = document,
                     FirstName = firstName,
                     LastName = lastName,
-                   
-                    Email = email,
+                   Email = email,
                   UserName = email,
-                   PhoneNumber = phone,
-
+                  
+                  PhoneNumber = phone,  
                     UserType = userType,
                 };
 
