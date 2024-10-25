@@ -11,7 +11,7 @@ namespace Veterinary.Shared.Entities
     public  class Pet
     {
 
-
+        // CD con Pets
         public int Id { get; set; }
 
         [Display(Name = "Nombre mascota")]
