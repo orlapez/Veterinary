@@ -12,7 +12,7 @@ namespace Veterinary.Shared.Entities
 {
 public  class User:IdentityUser
     {
-
+      //DataAnnotations
         [Display(Name = "Documento")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo 20 caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
