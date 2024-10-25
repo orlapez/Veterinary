@@ -36,6 +36,8 @@ namespace Veterinary.Shared.Entities
         [MaxLength(100, ErrorMessage = "EL nombre debe ser menor a 100 caracteres")]
         public string Remarks { get; set; }
 
+
+
         [JsonIgnore]
         public ICollection<History> Histories { get; set; }
 
@@ -50,6 +52,10 @@ namespace Veterinary.Shared.Entities
         [JsonIgnore]
 
         public ICollection<Agenda> Agendas { get; set; }
+
+        [Display(Name = "Kind")]
+        [Required]
+        public string Kind { get; set; }
 
 
 
