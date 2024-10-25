@@ -1,0 +1,16 @@
+﻿@page "/logout"
+@using Veterinary.WEB.Auth;
+@using Veterinary.WEB.AuthenticationProviders
+@using Veterinary.WEB.Services
+@inject ILoginService loginService
+@inject NavigationManager navigationManager
+
+<p>Cerrando sesión...</p>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await loginService.LogoutAsync();
+        navigationManager.NavigateTo("/");
+    }
+}

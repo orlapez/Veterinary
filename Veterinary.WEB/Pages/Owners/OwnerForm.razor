@@ -1,0 +1,105 @@
+﻿@using Veterinary.Shared.Entities
+
+
+
+<EditForm Model="Owner" OnSubmit="OnSubmit">
+
+<DataAnnotationsValidator/>
+
+<div class="mb-3">
+
+    <label>Documento</label>
+    <div>
+
+<InputText width="10" @bind-Value="Owner.Document"/>
+
+    </div>
+
+</div>
+
+    <div class="mb-3">
+
+        <label>Nombre</label>
+        <div>
+
+            <InputText width="10" @bind-Value="Owner.FirstName" />
+
+        </div>
+
+    </div>
+
+
+    <div class="mb-3">
+
+    <label>Apellido</label>
+    <div>
+
+<InputText width="10" @bind-Value="Owner.LastName"/>
+
+    </div>
+
+</div>
+
+
+    <div class="mb-3">
+
+        <label>Telefono fijo</label>
+        <div>
+
+            <InputText width="10" @bind-Value="Owner.FixedPhone" />
+
+        </div>
+
+    </div>
+
+
+
+    <div class="mb-3">
+
+        <label>Móvil</label>
+        <div>
+
+            <InputText width="10" @bind-Value="Owner.CellPhone" />
+
+        </div>
+
+    </div>
+
+
+    <div class="mb-3">
+
+        <label>Dirección</label>
+        <div>
+
+            <InputText width="10" @bind-Value="Owner.Address" />
+
+        </div>
+
+    </div>
+
+
+    <button class="btn btn-primary" type="submit" >Guardar</button>
+    <button class="btn btn-success" onclick="ReturnAction">Regresar</button>
+
+
+</EditForm>
+
+
+
+@code {
+
+    [EditorRequired]
+    [Parameter]
+    public Owner Owner { get; set; }
+
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+
+}
