@@ -38,6 +38,9 @@ namespace Veterinary.Shared.Entities
         [Required]
         public string  Address { get; set; }
 
+        public string Barrio { get; set; }
+
+
         public string FullName=>$"{FirstName}  {LastName}";
 
         [JsonIgnore]
