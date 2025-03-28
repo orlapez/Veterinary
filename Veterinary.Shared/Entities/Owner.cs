@@ -9,6 +9,9 @@ namespace Veterinary.Shared.Entities
 {
  public class Owner
     {
+        //Primary key
+        //Autonumeric
+        
         public int Id { get; set; }
 
 
@@ -38,7 +41,8 @@ namespace Veterinary.Shared.Entities
         [MaxLength(10, ErrorMessage = "El telefono móvil no puede superar los 10 caracteres")]
         public string CellPhone { get; set; }
 
-
+        // =>  expresión Lambda
+        // $ interpolación de cadenas
        public string FullName =>$"{FirstName} {LastName}";
 
 

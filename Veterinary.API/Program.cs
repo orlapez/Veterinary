@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Veterinary.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +13,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<DataContext>(x=>x.UseSqlServer("name=DefaultConnection"));
+
 
 
 var app = builder.Build();
@@ -20,12 +25,14 @@ var app = builder.Build();
 //Midlewares
 
 
-app.UseSwagger();
-app.UseSwaggerUI();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
