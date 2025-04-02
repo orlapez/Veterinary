@@ -14,6 +14,7 @@ namespace Veterinary.API.Data
          public DbSet<Owner>Owners { get; set; }
 
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
