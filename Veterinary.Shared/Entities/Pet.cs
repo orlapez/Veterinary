@@ -46,14 +46,24 @@ namespace Veterinary.Shared.Entities
 
         [JsonIgnore]
         public ICollection<History> Histories { get; set; }
+
+
         [JsonIgnore]
+
         public ICollection<Agenda> Agenda { get; set; }
 
         [JsonIgnore]
+
         public Owner Owner { get; set; }
 
+        public int OwnerId { get; set; }
+
         [JsonIgnore]
+
         public PetType PetType { get; set; }
+
+
+        public int PetTypeId { get; set; }
 
 
     }
