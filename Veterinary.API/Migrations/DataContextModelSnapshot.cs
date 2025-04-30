@@ -17,7 +17,7 @@ namespace Veterinary.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -148,10 +148,10 @@ namespace Veterinary.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("OwnerId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PetTypeId")
+                    b.Property<int>("PetTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Race")
@@ -241,11 +241,15 @@ namespace Veterinary.API.Migrations
                 {
                     b.HasOne("Veterinary.Shared.Entities.Owner", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Veterinary.Shared.Entities.PetType", "PetType")
                         .WithMany()
-                        .HasForeignKey("PetTypeId");
+                        .HasForeignKey("PetTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Owner");
 
