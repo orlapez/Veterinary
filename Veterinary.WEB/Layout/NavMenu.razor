@@ -15,13 +15,20 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
+            <NavLink class="nav-link" href="owners">
                 <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Owners
             </NavLink>
         </div>
+
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
+            <NavLink class="nav-link" href="pets">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Pets
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="agendas">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Agenda
             </NavLink>
         </div>
     </nav>
@@ -30,7 +37,7 @@
 @code {
     private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {

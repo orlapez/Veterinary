@@ -1,0 +1,72 @@
+﻿@using CurrieTechnologies.Razor.SweetAlert2
+@using Veterinary.Shared.Entities
+@using Veterinary.WEB.Repositories
+
+@page "/Owners/edit/{Id:int}"
+
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService swal
+
+
+<h3>Editar Owner</h3>
+
+@if (Owner is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <OwnerForm @ref="OwnerForm" Owner="Owner" OnSubmit="Edit" ReturnAction="Return" />
+}
+
+@code {
+    private Owner Owner;
+    private OwnerForm OwnerForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHTTP = await repository.GetAsync<Owner>($"/api/owners/{Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("owners");
+            }
+            else
+            {
+                var messageError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            Owner = responseHTTP.Response;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var responseHTTP = await repository.PutAsync("/api/owners", Owner);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessageAsync();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+          
+            navigationManager.NavigateTo("/owners");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/owners");
+    }
+}

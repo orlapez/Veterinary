@@ -1,0 +1,49 @@
+﻿@using CurrieTechnologies.Razor.SweetAlert2
+@using Veterinary.Shared.Entities
+@using Veterinary.WEB.Repositories
+
+@page "/owners/create"
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+
+<h3>Owner Create</h3>
+
+<OwnerForm @ref="ownerForm" Owner="Owner" OnSubmit="Create" ReturnAction="Return" />
+
+
+@code {
+    public Owner Owner = new();
+    public OwnerForm ownerForm;
+
+
+
+    private async Task Create()
+    {
+
+        var responseHttp = await repository.PostAsync("/api/owners", Owner);
+        if (responseHttp.Error)
+        {
+
+            var mensaje = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", mensaje);
+            return;
+
+
+        }
+        navigationManager.NavigateTo("/owners");
+
+    }
+
+
+
+    private void Return(){
+
+         navigationManager.NavigateTo("/owners");
+
+
+
+    }
+}
