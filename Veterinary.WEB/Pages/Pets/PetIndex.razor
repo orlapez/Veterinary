@@ -1,0 +1,152 @@
+﻿@page "/pets"
+@using CurrieTechnologies.Razor.SweetAlert2
+@using Veterinary.Shared.Entities
+@using Veterinary.WEB.Repositories
+@using Veterinary.WEB.Shared
+
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
+
+
+
+<h1>Pets Index</h1>
+
+@if (Pets is null)
+{
+    <div class="spinner" />
+}
+else
+{
+
+
+
+
+
+    <GenericList MyList="Pets">
+
+        <Body>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>
+                        <i class="oi oi-globe"></i> Pets
+                        <a class="btn btn-sm btn-primary float-end" href="/Pets/create"><i class="oi oi-plus"></i> Crear Pet</a>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Pet</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pet in Pets!)
+                    {
+                        <tr>
+
+                            <td>
+                                @pet.Name
+                            </td>
+                            <td>
+                                @pet.Race
+                            </td>
+
+
+                            <td>
+                                @pet.Born
+                            </td>
+
+
+                            <td>
+                                @pet.Age
+                            </td>
+
+                            <td>
+                                @pet.Remarks
+                            </td>
+
+
+
+                            <td>
+                                <a href="/Pets/edit/@pet.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(pet))><i class="oi oi-trash" /> Borrar</button>
+
+
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </Body>
+
+    </GenericList>
+}
+
+
+
+
+@code {
+
+
+    public List<Pet> Pets { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        var responseHppt = await repository.GetAsync<List<Pet>>("/api/Pets");
+        Pets = responseHppt.Response!;
+    }
+
+    private async Task DeleteAsync(Pet Pet)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.DeleteAsync($"api/Pets/{Pet.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
+    }
+}

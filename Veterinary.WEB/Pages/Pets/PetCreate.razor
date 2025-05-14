@@ -1,0 +1,49 @@
+﻿@using CurrieTechnologies.Razor.SweetAlert2
+@using Veterinary.Shared.Entities
+@using Veterinary.WEB.Repositories
+
+@page "/Pets/create"
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+
+<h3>Pet Create</h3>
+
+<PetForm @ref="PetForm" Pet="Pet" OnSubmit="Create" ReturnAction="Return" />
+
+
+@code {
+    public Pet Pet = new();
+    public PetForm PetForm;
+
+
+
+    private async Task Create()
+    {
+
+        var responseHttp = await repository.PostAsync("/api/Pets", Pet);
+        if (responseHttp.Error)
+        {
+
+            var mensaje = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", mensaje);
+            return;
+
+
+        }
+        navigationManager.NavigateTo("/Pets");
+
+    }
+
+
+
+    private void Return(){
+
+         navigationManager.NavigateTo("/Pets");
+
+
+
+    }
+}

@@ -1,0 +1,72 @@
+﻿@using CurrieTechnologies.Razor.SweetAlert2
+@using Veterinary.Shared.Entities
+@using Veterinary.WEB.Repositories
+
+@page "/Pets/edit/{Id:int}"
+
+@inject NavigationManager navigationManager
+@inject IRepository repository
+@inject SweetAlertService swal
+
+
+<h3>Editar Pet</h3>
+
+@if (Pet is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <PetForm @ref="PetForm" Pet="Pet" OnSubmit="Edit" ReturnAction="Return" />
+}
+
+@code {
+    private Pet Pet;
+    private PetForm PetForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHTTP = await repository.GetAsync<Pet>($"/api/pets/{Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("pets");
+            }
+            else
+            {
+                var messageError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            Pet = responseHTTP.Response;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var responseHTTP = await repository.PutAsync("/api/pets", Pet);
+
+        if (responseHTTP.Error)
+        {
+            var mensajeError = await responseHTTP.GetErrorMessageAsync();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+          
+            navigationManager.NavigateTo("/pets");
+        }
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/pets");
+    }
+}

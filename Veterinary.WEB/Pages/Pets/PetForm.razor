@@ -1,0 +1,92 @@
+﻿@using Veterinary.Shared.Entities
+
+@inject NavigationManager Navigation
+
+<EditForm Model="Pet" OnSubmit="OnSubmit">
+
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+
+
+
+        <div class="mb-3">
+
+            <label>Nombre</label>
+            <div>
+
+                <InputText width="10" @bind-Value="Pet.Name" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="mb-3">
+
+
+
+        <div class="mb-3">
+
+            <label>Raza</label>
+            <div>
+
+                <InputText width="10" @bind-Value="Pet.Race" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="mb-3">
+
+
+
+        <div class="mb-3">
+
+            <label>Observaciones</label>
+            <div>
+
+                <InputText width="10" @bind-Value="Pet.Remarks" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <button class="btn btn-primary" type="submit" >Guardar</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+
+
+</EditForm>
+
+
+
+@code {
+
+    [EditorRequired]
+    [Parameter]
+    public Pet Pet { get; set; }
+
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+
+}
