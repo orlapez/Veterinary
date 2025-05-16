@@ -3,6 +3,9 @@
 @using Veterinary.Shared.Entities
 @using Veterinary.WEB.Repositories
 @using Veterinary.WEB.Shared
+@using Microsoft.AspNetCore.Authorization;
+
+@attribute [Authorize(Roles = "Admin")]
 
 
 @inject IRepository repository
