@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Veterinary.API/Veterinary.API.csproj" Id="0f9408e6-4cdd-474b-a73e-7505edb1ff6a" />
+  <Project Path="Veterinary.Shared/Veterinary.Shared.csproj" Id="02e9a01b-b986-407a-a85b-79c10c781165" />
+  <Project Path="Veterinary.WEB/Veterinary.WEB.csproj" Id="3e12ca15-a5d4-4727-a1a2-09830b6309d4" />
+</Solution>
