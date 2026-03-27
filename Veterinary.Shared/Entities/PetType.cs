@@ -15,5 +15,9 @@ namespace Veterinary.Shared.Entities
         [MaxLength(20, ErrorMessage = "The Name field can not have more than 20 characters.")]
 
         public string Name { get; set; }
+
+
+        //Envia su foranea a Pet
+        public ICollection <Pet> Pets { get; set; }
     }
 }

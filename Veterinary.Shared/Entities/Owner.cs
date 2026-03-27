@@ -48,6 +48,13 @@ namespace Veterinary.Shared.Entities
 
         public string FullName => $"{FirstName} {LastName}".TrimEnd();
 
+        //Envia su foranea a Agenda
+        public ICollection<Agenda> Agendas { get; set; }
+
+        //Envia su foranea también a Pet
+
+        public ICollection<Pet> Pets { get; set; }
+
 
     }
 }

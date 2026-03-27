@@ -29,12 +29,19 @@ namespace Veterinary.Shared.Entities
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime DateLocal => Date.ToLocalTime();
 
+        //Recibe foranea de ServiceType (ServiceTypeId)
+
         [JsonIgnore]
         public ServiceType ServiceType { get; set; }
 
         public int ServiceTypeId { get; set; }
 
-        //public Pet Pet { get; set; }
+        //Recibe foranea de Pet ((PetId)
+        [JsonIgnore]
+
+        public Pet Pet { get; set; }
+
+        public int PetId { get; set; }
 
     }
 }
