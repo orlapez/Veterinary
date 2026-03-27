@@ -18,6 +18,7 @@ namespace Veterinary.Shared.Entities
         public string Document { get; set; }
 
         [Display(Name = "Nombres")]
+        //[RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "The Name field can only contain letters and spaces.")]
         [Required(ErrorMessage = "The document field is required.")]
         [MaxLength(50, ErrorMessage = "The Name field can not have more than 20 characters.")]
         public string FirstName { get; set; }
@@ -29,12 +30,13 @@ namespace Veterinary.Shared.Entities
 
         [Display(Name = "Teléfono")]
       
-        [MaxLength(20, ErrorMessage = "The Phone field can not have more than 20 characters.")]
+        [MaxLength(10, ErrorMessage = "The Phone field can not have more than 10 characters.")]
         public string FixedPhone { get; set; }
 
         [Display(Name = "Móvil")]
+        //[RegularExpression(@"^\d{10}$", ErrorMessage = "The Cellphone field must be a 10-digit number.")]
         [Required(ErrorMessage = "The Cellphone field is required.")]
-        [MaxLength(20, ErrorMessage = "The Cellphone field can not have more than 20 characters.")]
+        [MaxLength(10, ErrorMessage = "The Cellphone field can not have more than 10 characters.")]
 
         public string CellPhone { get; set; }
 
