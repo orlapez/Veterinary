@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Veterinary.Shared.Entities
 {
@@ -49,10 +50,14 @@ namespace Veterinary.Shared.Entities
         public string FullName => $"{FirstName} {LastName}".TrimEnd();
 
         //Envia su foranea a Agenda
+
+        [JsonIgnore]
         public ICollection<Agenda> Agendas { get; set; }
 
         //Envia su foranea también a Pet
 
+
+        [JsonIgnore]
         public ICollection<Pet> Pets { get; set; }
 
 
