@@ -11,9 +11,26 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<SeedDb>();
 
 
 var app = builder.Build();
+
+
+
+SeedData(app);
+
+void SeedData(WebApplication app)
+{
+    IServiceScopeFactory scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope scope = scopedFactory!.CreateScope())
+    {
+        SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
+        service!.SeedDbAsync().Wait();
+    }
+}
+
 
 
 if (app.Environment.IsDevelopment())
@@ -33,5 +50,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
+
 
 app.Run();
