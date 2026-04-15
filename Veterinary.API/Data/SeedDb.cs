@@ -25,7 +25,7 @@ namespace Veterinary.API.Data
 
             await _context.Database.EnsureCreatedAsync();
             await CheckPetTypesAsync();
-            awai CheckervicesAsync();
+          
 
 
         }
