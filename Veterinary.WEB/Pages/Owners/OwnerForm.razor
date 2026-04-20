@@ -1,0 +1,146 @@
+﻿@inject SweetAlertService swal
+
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
+
+
+
+@using Veterinary.Shared.Entities
+
+<EditForm EditContext="editContext" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+
+        <label>Documento:</label>
+
+        <div>
+            <InputText width="10" @bind-Value="Owner.Document" />
+            <ValidationMessage For="@(() => Owner.Document)" />
+
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <label>Nombre:</label>
+
+
+        <div>
+            <InputText width="10" @bind-Value="Owner.FirstName" />
+            <ValidationMessage For="@(() => Owner.FirstName)" />
+
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <label>Apellidos:</label>
+
+        <div>
+            <InputText width="10" @bind-Value="Owner.LastName" />
+            <ValidationMessage For="@(() => Owner.LastName)" />
+
+        </div>
+    </div>
+
+
+    <div class="mb-3">
+        <label>Dirección:</label>
+
+        <div>
+            <InputText width="10" @bind-Value="Owner.Address" />
+            <ValidationMessage For="@(() => Owner.Address)" />
+
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label>Teléfono fijo:</label>
+        <div>
+            <InputText width="10" @bind-Value="Owner.FixedPhone" />
+            <ValidationMessage For="@(() => Owner.FixedPhone)" />
+
+        </div>
+    </div>
+    <div class="mb-3">
+        <label>Móvil:</label>
+
+        <div>
+            <InputText width="10" @bind-Value="Owner.CellPhone" />
+            <ValidationMessage For="@(() => Owner.CellPhone)" />
+
+        </div>
+
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <button class="btn btn-success" type="button"  @onclick="ReturnAction">Regresar</button>
+
+         
+
+</EditForm>
+
+
+
+@code {
+    private EditContext editContext = null!;
+
+    protected override void OnInitialized()
+    {
+        editContext = new(Owner);
+    }
+
+
+
+    [EditorRequired]
+    [Parameter]
+    public Owner Owner { get; set; }
+
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+
+    public EventCallback ReturnAction { get; set; }
+    public bool FormPostedSuccessfully { get; set; } = false;
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        var formWasEdited = editContext.IsModified();
+
+        if (!formWasEdited)
+        {
+            return;
+        }
+
+        if (FormPostedSuccessfully)
+        {
+            return;
+        }
+
+        var result = await swal.FireAsync(new SweetAlertOptions
+        {
+            Title = "Confirmación",
+            Text = "¿Deseas abandonar la página y perder los cambios?",
+            Icon = SweetAlertIcon.Warning,
+            ShowCancelButton = true
+        });
+
+        var confirm = !string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        context.PreventNavigation();
+    }
+
+
+
+}

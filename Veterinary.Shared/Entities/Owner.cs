@@ -20,12 +20,12 @@ namespace Veterinary.Shared.Entities
 
         [Display(Name = "Nombres")]
         //[RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "The Name field can only contain letters and spaces.")]
-        [Required(ErrorMessage = "The document field is required.")]
+        [Required(ErrorMessage = "FirstName field is required.")]
         [MaxLength(50, ErrorMessage = "The Name field can not have more than 20 characters.")]
         public string FirstName { get; set; }
 
         [Display(Name = "Apellido")]
-        [Required(ErrorMessage = "The document field is required.")]
+        [Required(ErrorMessage = "Lastname field is required.")]
         [MaxLength(50, ErrorMessage = "The Lastname field can not have more than 20 characters.")]
         public string LastName { get; set; }
 

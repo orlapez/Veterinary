@@ -32,7 +32,7 @@ namespace Veterinary.API.Controllers
 
         //Get By Id -- Tipo Select * from Owners where Id = 1
 
-        [HttpGet("id:int")]
+        [HttpGet("{id:int}")]
 
         public async Task<ActionResult>Get(int id)
         {
@@ -106,7 +106,7 @@ namespace Veterinary.API.Controllers
 
         // DELETE: api/owners/id -- Tipo Delete from Owners where Id = 1
 
-        [HttpDelete("id:int")]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
             var filasAfectadas = await _context.Owners
