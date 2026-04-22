@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Veterinary.Shared.Entities;
 
 namespace Veterinary.API.Data
 {
-    public class DataContext:DbContext
+    public class DataContext:IdentityDbContext<User>
     {
 
 
