@@ -22,11 +22,13 @@ namespace Veterinary.API.Data
         public DbSet<History> Histories { get; set; }
 
         public DbSet<Agenda> Agendas { get; set; }
-    
+
+        public DbSet<User> Users { get; set; }
 
 
 
-protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Owner>().HasIndex(o => o.Document).IsUnique();
