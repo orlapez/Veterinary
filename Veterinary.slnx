@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Veterinary.API/Veterinary.API.csproj" />
+  <Project Path="Veterinary.Shared/Veterinary.Shared.csproj" />
+  <Project Path="Veterinary.WEB/Veterinary.WEB.csproj" />
+</Solution>
