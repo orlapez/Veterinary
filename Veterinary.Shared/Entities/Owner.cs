@@ -12,14 +12,13 @@ namespace Veterinary.Shared.Entities
         [Display(Name = "Documento de Identidad")]
         [MaxLength(10, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [RegularExpression(@"^[0-9]$", ErrorMessage = "El campo {0} debe tener entre 8 y 10 dígitos.")]
         public string Document { get; set; }
 
 
         [Display(Name = "Nombre")]
         [MaxLength(50, ErrorMessage = "El campo FirstName debe tener una logitud de 50")]
         [Required(ErrorMessage = "Este campo es obligatorio.")]
-        [
+        
         public string FirstName { get; set; }  
         
         [Display(Name = "Apellido")]
@@ -50,4 +49,4 @@ namespace Veterinary.Shared.Entities
 
 
     }
-}
+
