@@ -52,6 +52,49 @@ namespace Veterinary.API.Controllers
             return Ok(owner);
         }
 
+        //Update Owners set Document = '123456789', FirstName = 'John', LastName = 'Doe', FixedPhone = '123-456-7890', CellPhone = '098-765-4321', Address = '123 Main St' where Id = 1
+        [HttpPut]
+        public async Task<ActionResult> Put(Owner owner)
+        {
+            _context.Update(owner);
+            await _context.SaveChangesAsync();
+            return Ok(owner);
+        }
+
+        //Delete from Owners where Id = 1
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var owner = await _context.Owners.FirstOrDefaultAsync(x => x.Id == id);
+            if (owner == null)
+            {
+                return NotFound(); //404
+            }
+            _context.Remove(owner);
+            await _context.SaveChangesAsync();
+            return NoContent(); //204
+        }
+
+
+        //Update Owners set Document = '123456789', FirstName = 'John', LastName = 'Doe', FixedPhone = '123-456-7890', CellPhone = '098-765-4321', Address = '123 Main St' where Id = 1
+        [HttpPatch]
+
+        public async Task<ActionResult> Patch(Owner owner)
+        {
+            _context.Update(owner);
+            await _context.SaveChangesAsync();
+            return Ok(owner);
+
+        }
+
+
+
+    
+
+
+
+
+
 
 
 
