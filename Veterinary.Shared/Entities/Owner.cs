@@ -44,9 +44,22 @@ namespace Veterinary.Shared.Entities
 
         public string FullName => $"{FirstName} {LastName}";    
 
-    }
+        public ICollection<Pet> Pets
+        {
+            get; set;
+
+
+
+        }
+
+        public ICollection<Agenda> Agendas
+        {
+            get; set;
+        }
 
 
 
     }
+
+}
 

@@ -35,7 +35,6 @@ namespace Veterinary.Shared.Entities
       
         public string Remarks { get; set; }
 
-
         public int PetTypeId { get; set; }
 
         [JsonIgnore]
@@ -47,7 +46,11 @@ namespace Veterinary.Shared.Entities
         [JsonIgnore]
         public Owner Owner { get; set; }
 
-  
+
+        public ICollection<History>Histories { get; set; }
+
+        public ICollection<Agenda> Agendas { get; set; }
+
 
 
     }
