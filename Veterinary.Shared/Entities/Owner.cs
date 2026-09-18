@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Veterinary.Shared.Entities
 {
@@ -42,8 +43,10 @@ namespace Veterinary.Shared.Entities
         public string Address { get; set; }
 
 
-        public string FullName => $"{FirstName} {LastName}";    
+        public string FullName => $"{FirstName} {LastName}";
 
+
+        [JsonIgnore]
         public ICollection<Pet> Pets
         {
             get; set;
@@ -52,6 +55,7 @@ namespace Veterinary.Shared.Entities
 
         }
 
+[JsonIgnore]
         public ICollection<Agenda> Agendas
         {
             get; set;

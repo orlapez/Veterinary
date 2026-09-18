@@ -46,8 +46,10 @@ namespace Veterinary.Shared.Entities
         [JsonIgnore]
         public Owner Owner { get; set; }
 
-
+        [JsonIgnore]
         public ICollection<History>Histories { get; set; }
+
+        [JsonIgnore]
 
         public ICollection<Agenda> Agendas { get; set; }
 
