@@ -39,7 +39,7 @@ namespace Veterinary.WEB.Repositories
             }
             else if (codigoEstatus == HttpStatusCode.Forbidden)// 403
             {
-                return " No tienes permisos para ejecutar esta acción(Prohido)";
+                return " No tienes permisos para ejecutar esta acción(Prohibido)";
             }
 
             return "Ha ocurrido un error inesperado";//500
