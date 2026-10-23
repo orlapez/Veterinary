@@ -20,6 +20,8 @@ namespace Veterinary.API.Data
         public DbSet<History> Histories { get; set; }
 
         public DbSet<Agenda> Agendas { get; set; }
+
+        public DbSet <User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
