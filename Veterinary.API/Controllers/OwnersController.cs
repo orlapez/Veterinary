@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Veterinary.API.Data;
 using Veterinary.Shared.Entities;
@@ -28,6 +30,8 @@ namespace Veterinary.API.Controllers
 
         }
 
+
+        [AllowAnonymous]
         //Select * from Owners where Id = 1
         [HttpGet("{Id:int}")]
         public async Task<ActionResult> Get(int id)
@@ -42,6 +46,8 @@ namespace Veterinary.API.Controllers
 
 
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         //Insert into Owners (Document, FirstName, LastName, FixedPhone, CellPhone, Address) values ('123456789', 'John', 'Doe', '123-456-7890', '098-765-4321', '123 Main St')
         [HttpPost]
