@@ -1,0 +1,66 @@
+﻿@page "/Login"
+@using Veterinary.Shared.DTOs;
+@using Veterinary.WEB.Pages.Auth;
+@using Veterinary.WEB.Services
+@inject IRepository repository
+@inject SweetAlertService sweetAlertService
+@inject NavigationManager navigationManager
+@inject ILoginService loginService
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: #f5f7fb;">
+    <div class="col-11 col-sm-8 col-md-5 col-lg-4">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header border-0 text-center py-4" style="background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%); border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem;">
+                <h5 class="text-white mb-1">Iniciar sesión</h5>
+                <p class="text-white-50 mb-0" style="font-size: .85rem;">Ingresa con tu cuenta para continuar</p>
+            </div>
+
+            <div class="card-body p-4">
+                <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <InputText class="form-control rounded-3" @bind-Value="loginDTO.Email" />
+                        <ValidationMessage For="@(() => loginDTO.Email)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <InputText type="password" class="form-control rounded-3" @bind-Value="loginDTO.Password" />
+                        <ValidationMessage For="@(() => loginDTO.Password)" />
+                    </div>
+
+                    <div class="d-grid mt-3">
+                        <button class="btn btn-primary rounded-3 py-2" type="submit">
+                            Iniciar sesión
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+
+            <div class="card-footer bg-white border-0 text-center pb-4">
+                <small class="text-muted">¿Olvidaste tu contraseña?</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private LoginDTO loginDTO = new();
+
+    private async Task LoginAsync()
+    {
+        var responseHttp = await repository.PostAsync<LoginDTO, TokenDTO>("/api/accounts/Login", loginDTO);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        await loginService.LoginAsync(responseHttp.Response!.Token);
+        navigationManager.NavigateTo("/");
+    }
+}

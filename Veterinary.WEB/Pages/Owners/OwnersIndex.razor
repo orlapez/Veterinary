@@ -1,4 +1,9 @@
-﻿@page "/owners" 
+﻿@using Microsoft.AspNetCore.Authorization;
+
+@attribute [Authorize(Roles = "Admin")]
+
+
+@page "/owners" 
 @inject NavigationManager navigationManager
 @inject SweetAlertService swal
 

@@ -19,7 +19,7 @@ namespace Veterinary.API.Controllers
         {
             _context = context;
         }
-
+        [AllowAnonymous]
         //Select * from Owners
         [HttpGet]
         public async Task<ActionResult> Get()
@@ -58,6 +58,8 @@ namespace Veterinary.API.Controllers
             return Ok(owner);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
         //Update Owners set Document = '123456789', FirstName = 'John', LastName = 'Doe', FixedPhone = '123-456-7890', CellPhone = '098-765-4321', Address = '123 Main St' where Id = 1
         [HttpPut]
         public async Task<ActionResult> Put(Owner owner)
@@ -66,6 +68,9 @@ namespace Veterinary.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(owner);
         }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         //Delete from Owners where Id = 1
         [HttpDelete("{id:int}")]
@@ -81,6 +86,7 @@ namespace Veterinary.API.Controllers
             return NoContent(); //204
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         //Update Owners set Document = '123456789', FirstName = 'John', LastName = 'Doe', FixedPhone = '123-456-7890', CellPhone = '098-765-4321', Address = '123 Main St' where Id = 1
         [HttpPatch]
