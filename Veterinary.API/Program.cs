@@ -75,43 +75,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) // Ag
 
 var app = builder.Build();
 
-SeedData(app);
-
-void SeedData(WebApplication app)
-{
-    IServiceScopeFactory scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (IServiceScope scope = scopedFactory!.CreateScope())
-    {
-        SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
-        service!.SeedAsync().Wait();
-    }
-}
-
-
-
 
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-
-    app.UseSwaggerUI(options =>
+    using (var scope = app.Services.CreateScope())
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Veterinary API v1");
-    });
+        var dbContext = scope.ServiceProvider
+            .GetRequiredService<DataContext>();
+
+        dbContext.Database.Migrate();
+    }
 }
 
+// Enable Swagger.
+app.UseSwagger();
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint(
+        "/swagger/v1/swagger.json",
+        "Veterinary API v1");
+});
 
 app.UseHttpsRedirection();
-
-app.UseAuthentication();    
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-
 
 app.UseCors(x => x
     .AllowAnyMethod()
@@ -119,5 +106,9 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

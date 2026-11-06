@@ -30,4 +30,8 @@
     <ProjectReference Include="..\Veterinary.Shared\Veterinary.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\ServiceDependencies\" />
+  </ItemGroup>
+
 </Project>
